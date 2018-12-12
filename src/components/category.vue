@@ -14,7 +14,7 @@
 
     <!-- 컨텐츠 -->
     <div class="row">
-      <div v-for="(data, index) in orderBy(datas)" :key="index" class="col-lg-12">
+      <div v-for="(data, index) in orderBy(filterDatas)" :key="index" class="col-lg-12">
         <div class="panel panel-default">
           <div class="panel-heading">
             <span>{{data.title}}</span>
@@ -61,7 +61,7 @@ export default {
        * 필터링 대상 목
        * @type { Array }
        */
-      fCtgrys: [1, 2, 3]
+      fCtgrys: ['1', '2', '3']
     }
   },
   created () {
@@ -75,11 +75,9 @@ export default {
   },
   methods: {
     /**
-     * 필터링 및 오름/내림 차순으로 정렬한 목록을 반환한다.
-     * @param { Array } items 필터링 및 오름/내림 차순으로 정렬할 목록
-     * @param { String } ctgryTextNo 필터링 할 카테고리 번호
-     * @return { Array } 필터링 및 오름/내림 차순으로 정렬한 목록
-     * @todo filter등록하는 방법을 학습해서 분리하자!!!
+     * 오름/내림 차순으로 정렬한 목록을 반환한다.
+     * @param { Array } items 정렬대상 목록
+     * @return { Array } 오름/내림 차순으로 정렬한 목록
      */
     orderBy: function (items) {
       // 항목의 값이 없거나 배열타입이 아니라면...
@@ -95,9 +93,17 @@ export default {
       } else {
         return items
       }
-    },
-    callbackFn: function () {
-      this.datas = this.orgDatas.filter(data => this.fCtgrys.includes(data.category_no))
+    }
+  },
+  /**
+   * TODO computed의미를 파악하여 정확한 주석 작성할것
+   */
+  computed: {
+    filterDatas: function () {
+      let that = this
+      return this.orgDatas.filter(data => {
+        return that.fCtgrys.includes(data.category_no)
+      })
     }
   }
 }

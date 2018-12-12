@@ -55,20 +55,28 @@ export default {
       .get('http://comento.cafe24.com/request.php?page=1&ord=asc&category=1')
       .then(res => {
         this.datas = res.data.list.map(data => data)
-        console.log(this.datas)
       })
   },
   methods: {
-    orderByAndCtgryFilter: (items, ctgryTextNo) => {
+    /**
+     * 필터링 및 오름/내림 차순으로 정렬한 목록을 반환한다.
+     * @param { Array } items 필터링 및 오름/내림 차순으로 정렬할 목록
+     * @param { String } ctgryTextNo 필터링 할 카테고리 번호
+     * @return { Array } 필터링 및 오름/내림 차순으로 정렬한 목록
+     * @todo filter등록하는 방법을 학습해서 분리하자!!!
+     */
+    orderByAndCtgryFilter: function (items, ctgryTextNo) {
+      // 값이 없거나 배열타입이 아니라면...
       if (!Array.isArray(items) || items.length === 0) {
         return
       }
 
-      // TODO filter등록하는 방법을 학습해서 분리하자!
+      // 필터에서 선택된 카테고리목록을 필터링한다.
       if (ctgryTextNo !== '') {
         items = items.filter(data => data.category_no === ctgryTextNo)
       }
 
+      // 오름/내림 차순으로 정렬하여 반환한다.
       if (this.sortDirection === 'asc') {
         return items.sort((a, b) => a.user_no - b.user_no)
       } else if (this.sortDirection === 'desc') {

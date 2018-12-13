@@ -1,16 +1,17 @@
 <template>
   <!-- 컨테이너 -->
-  <div class="xx">
-
+  <div class="main">
     <!-- 필터 및 정렬 -->
     <div class="row">
       <div class="col-lg-10">
-        <button type="button" class="btn btn-default btn-sm">필터</button>
+        <FilterModal></FilterModal>
+        <!-- <button type="button" class="btn btn-default btn-sm" @click="showModal">필터</button> -->
       </div>
       <div class="col-lg-2 pull-right sel-sort">
         <span v-on:click="sortDirection = 'asc'" v-bind:class="{ active: sortDirection === 'asc' }">오름차순</span> / <span v-on:click="sortDirection = 'desc'" v-bind:class="{ active: sortDirection === 'desc' }">내림차순</span>
       </div>
-    </div><!-- /필터 및 정렬 -->
+    </div>
+    <!-- /필터 및 정렬 -->
 
     <!-- 컨텐츠 -->
     <div class="row">
@@ -31,15 +32,21 @@
           </div>
         </div>
       </div>
-    </div><!-- /컨텐츠 -->
-  </div><!-- /컨테이너 -->
+    </div>
+    <!-- /컨텐츠 -->
+  </div>
+  <!-- /컨테이너 -->
 </template>
 
 <script>
 import axios from 'axios'
+import FilterModal from '@/components/FilterModal.vue'
 
 export default {
   name: 'category',
+  components: {
+    FilterModal
+  },
   data () {
     return {
       /**
@@ -70,7 +77,6 @@ export default {
       .then(res => {
         this.orgDatas = res.data.list
         this.datas = this.orgDatas.map(data => data)
-        console.log(this.datas)
       })
   },
   methods: {
@@ -93,7 +99,7 @@ export default {
       } else {
         return items
       }
-    }
+    },
   },
   /**
    * TODO computed의미를 파악하여 정확한 주석 작성할것

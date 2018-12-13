@@ -17,7 +17,7 @@
 
 <script>
 export default {
-    name: `SignUpModal`,
+    name: 'SignUpModal',
     methods: {
         showModal() {
             this.$refs.myModalRef.show()

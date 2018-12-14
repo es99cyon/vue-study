@@ -18,14 +18,14 @@
         <b-card-group deck>
           <b-card no-body class="mg-15">
             <b-card-header>
-              <h4>{{data.title}} <small class="float-sm-right">{{data.no}}</small></h4>
-            </b-card-header>    
-            <b-card-body>
-              <div class="이메일/작성일" style="padding-bottom: 15px;">
+              <h4>{{data.title}} <SignUpModal class="float-sm-right"></SignUpModal><small class="float-sm-right mg-right-10">{{data.no}}</small></h4>
+            </b-card-header>   
+            <b-card-body @click="showModal">
+              <div class="contentMail">
                 <span>{{data.email}}</span> |
                 <span>{{data.updated_at}}</span>
               </div>
-              <div class="내용">
+              <div>
                 {{data.contents}}
               </div>
             </b-card-body>
@@ -41,11 +41,13 @@
 <script>
 import axios from 'axios'
 import FilterModal from '@/components/FilterModal.vue'
+import SignUpModal from '@/components/SignUpModal.vue'
 
 export default {
   name: 'category',
   components: {
-    FilterModal
+    FilterModal,
+    SignUpModal
   },
   data () {
     return {
@@ -65,10 +67,11 @@ export default {
        */
       sortDirection: 'asc',
       /**
-       * 필터링 대상 목
+       * 필터링 대상 목록
+       * @todo FilterModal data 가져와야함
        * @type { Array }
        */
-      fCtgrys: ['1', '2', '3']
+      fCtgrys: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
     }
   },
   created () {
@@ -97,9 +100,11 @@ export default {
       // 오름/내림 차순으로 정렬하여 반환한다.
       if (this.sortDirection === 'asc') {
         return items.sort((a, b) => a.no - b.no)
-      } else if (this.sortDirection === 'desc') {
+      } 
+      else if (this.sortDirection === 'desc') {
         return items.sort((a, b) => b.no - a.no)
-      } else {
+      } 
+      else {
         return items
       }
     },
@@ -133,5 +138,13 @@ export default {
   div.row>div.sel-sort>span.active {
     color: red;
     font-weight: bold;
+  }
+
+  .contentMail {
+    padding-bottom: 15px;
+  }
+
+  .mg-right-10 {
+    margin-right: 10px;
   }
 </style>

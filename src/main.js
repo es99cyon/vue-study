@@ -11,6 +11,9 @@ Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
 
+/**
+ * 뷰 생성자를 초기화한다.
+ */
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -4,6 +4,9 @@ import Category from '@/components/Category'
 
 Vue.use(Router)
 
+/**
+ * Router 경로를 설정한다.
+ */
 export default new Router({
   routes: [
     {

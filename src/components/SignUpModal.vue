@@ -17,9 +17,16 @@
 export default {
   name: "SignUpModal",
   methods: {
+    /**
+     * 모달을 오픈한다.
+     */
     showModal() {
       this.$refs.myModalRef.show();
     },
+    /**
+     * 모달을 닫는순간 상세페이지로 이동한다.
+     * @todo 상세페이지 이동 vuex 또는 router 공부하자.
+     */
     hideModal() {
       this.$refs.myModalRef.hide();
     }
@@ -28,6 +35,10 @@ export default {
 </script>
 
 <style scoped>
+  /******************************
+    ****모달 컨텐츠 영역******
+    ******************************/
+
   .width-100 {
     width: 100%;
   }

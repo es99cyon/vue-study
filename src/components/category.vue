@@ -5,7 +5,6 @@
     <div class="row">
       <div class="col-lg-10">
         <FilterModal></FilterModal>
-        <!-- <button type="button" class="btn btn-default btn-sm" @click="showModal">필터</button> -->
       </div>
       <div class="col-lg-2 pull-right sel-sort">
         <span v-on:click="sortDirection = 'asc'" v-bind:class="{ active: sortDirection === 'asc' }">오름차순</span> / <span v-on:click="sortDirection = 'desc'" v-bind:class="{ active: sortDirection === 'desc' }">내림차순</span>
@@ -16,21 +15,22 @@
     <!-- 컨텐츠 -->
     <div class="row">
       <div v-for="(data, index) in orderBy(filterDatas)" :key="index" class="col-lg-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <span>{{data.title}}</span>
-            <span class="pull-right">{{data.no}}</span>
-          </div>
-          <div class="panel-body">
-            <div class="이메일/작성일" style="padding-bottom: 15px;">
-              <span>{{data.email}}</span>|
-              <span>{{data.updated_at}}</span>
-            </div>
-            <div class="내용">
-              {{data.contents}}
-            </div>
-          </div>
-        </div>
+        <b-card-group deck>
+          <b-card no-body class="mg-15">
+            <b-card-header>
+              <h4>{{data.title}} <small class="float-sm-right">{{data.no}}</small></h4>
+            </b-card-header>    
+            <b-card-body>
+              <div class="이메일/작성일" style="padding-bottom: 15px;">
+                <span>{{data.email}}</span> |
+                <span>{{data.updated_at}}</span>
+              </div>
+              <div class="내용">
+                {{data.contents}}
+              </div>
+            </b-card-body>
+          </b-card>
+        </b-card-group>
       </div>
     </div>
     <!-- /컨텐츠 -->
@@ -78,6 +78,9 @@ export default {
         this.orgDatas = res.data.list
         this.datas = this.orgDatas.map(data => data)
       })
+      .catch(errMsg => {
+        alert(`error : 내용 ${errMsg}`);
+      });
   },
   methods: {
     /**
@@ -93,9 +96,9 @@ export default {
 
       // 오름/내림 차순으로 정렬하여 반환한다.
       if (this.sortDirection === 'asc') {
-        return items.sort((a, b) => a.user_no - b.user_no)
+        return items.sort((a, b) => a.no - b.no)
       } else if (this.sortDirection === 'desc') {
-        return items.sort((a, b) => b.user_no - a.user_no)
+        return items.sort((a, b) => b.no - a.no)
       } else {
         return items
       }
@@ -108,7 +111,7 @@ export default {
     filterDatas: function () {
       let that = this
       return this.orgDatas.filter(data => {
-        return that.fCtgrys.includes(data.category_no)
+        return that.fCtgrys.includes(data.no)
       })
     }
   }
@@ -119,6 +122,10 @@ export default {
   /******************************
   ****상단 필터 및 정렬 영역******
   ******************************/
+  .mg-15 {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
   div.row>div.sel-sort>span {
     cursor: pointer;
   }

@@ -1,6 +1,6 @@
 # assignment
 
-> 코멘토 과제 프로젝트입니다.
+> x 과제 프로젝트입니다.
 
 ## Build Setup
 
